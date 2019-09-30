@@ -1,5 +1,5 @@
 # AIWorkshopMadrid
-Material Workshop AI Madrid
+Material Workshop AI Madrid ![Plain Concepts](https://pbs.twimg.com/profile_images/976147159660851203/Ui_aSEjg_400x400.jpg)
 
 Bienvenidos al Workshop de AI. Se subirá todo el material de cada uno de los días en sus respectivas ramas.
 
