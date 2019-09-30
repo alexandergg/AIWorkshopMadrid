@@ -1,0 +1,10 @@
+{
+    "STORAGE_ACCOUNTNAME": "",
+    "STORAGE_KEY": "",
+    "COGNITIVE_KEY": "",
+    "STORAGE_DOCUMENTS": "",
+    "STORAGE_OCR": "",
+    "STORAGE_ENRICHMENT": "",
+    "COMPUTER_VISION_URL": "",
+    "TEXT_ANALYTICS_URL": ""
+}
