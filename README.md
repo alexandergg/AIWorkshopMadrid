@@ -1,6 +1,7 @@
-# AIWorkshopMadrid
 
 ![Plain Concepts](https://pbs.twimg.com/profile_images/976147159660851203/Ui_aSEjg_400x400.jpg)
+
+# AIWorkshopMadrid
 
 Material Workshop AI Madrid 
 
