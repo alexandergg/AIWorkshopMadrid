@@ -1,15 +1,21 @@
+# AIWorkshopMadrid - Día 2 - Machine Learning
 
-![Plain Concepts](https://pbs.twimg.com/profile_images/976147159660851203/Ui_aSEjg_400x400.jpg)
+## Laboratorio 1. Regresión
 
-# AIWorkshopMadrid
+Desde la empresa Mediature, nos han pedido ser capaces de predecir el número de ventas en función del dinero que se ha invertido en cada uno de los canales de Marketing existente: televisión, redes sociales y radio. El departamento de marketing nos ha facilitado su histórico de datos en formato .csv.
 
-Material Workshop AI Madrid 
 
-Bienvenidos al Workshop de AI. Se subirá todo el material de cada uno de los días en sus respectivas ramas.
+## Laboratorio 2. Clasificación
 
-Antes de empezar, recordad que debéis tener instalado:
 
-- Anaconda. Gestor de paquetes y entornos virtuales en Python. [https://www.anaconda.com/distribution/#download-section](Descarga)
-- Editor de código. En caso de no tener ninguno os podréis bajar VSCode de manera gratuita.[https://code.visualstudio.com/](Descarga)
+### Configuración
 
-También se necesitará tener una subscripción de Azure.
+Para poder configurar el entorno tendremos que tener instalado previamente anaconda.Una vez que hayamos terminado la instalación, desde anaconda prompt, o desde nuestra línea de comandos, podemos introducir:
+
+`conda env create -f environment.yml`
+
+para instalar todas nuestras dependencias. Una vez haya acabao el proceso, procederemos a activar el entorno.
+
+`conda activate aiworkshopday2`
+
+

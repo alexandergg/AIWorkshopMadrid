@@ -1,0 +1,18 @@
+name: aiworkshopday2
+channels:
+  - defaults
+dependencies:
+  - python=3.6.8
+  - pip=19.1.1=py36_0
+  - jupyter
+  - matplotlib
+  - pandas
+  - seaborn
+  - pip:
+    - azure-storage==0.36.0
+    - azureml-sdk==0.1.68
+    - Cython
+    - keras==2.2.4
+    - numpy==1.14.6
+    - scikit-learn==0.21.3
+    - tensorflow==1.12.0
