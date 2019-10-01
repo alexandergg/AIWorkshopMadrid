@@ -7,6 +7,7 @@ Desde la empresa Mediature, nos han pedido ser capaces de predecir el número de
 
 ## Laboratorio 2. Clasificación
 
+El departamento de ventas de la misma empresa, también esta interesado en saber si lo posibles clientes potenciales pueden o no comprar un producto. Para que podamos hacer un estudio de los datos, nos han pasado todo el histórico de compras y clientes. Al final, la idea principal es poder estudiar los comportamientos de los clientes y ver si un posible cliente puede comprar un producto o no en función de las últimas veces que visitó una tienda o su estado civil.
 
 ### Configuración
 
