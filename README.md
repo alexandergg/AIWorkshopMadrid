@@ -12,6 +12,10 @@ El departamento de ventas de la misma empresa, también esta interesado en saber
 
 El conjunto de datos se encuentra en: <https://aiworkspace1038514484.blob.core.windows.net/day2/retail_dataset.csv>
 
+## Laboratorio 3. Regresión Deep Learning
+
+Predicción de eficiencia de combustible de automóviles utilizando el dataset Auto MPG <https://archive.ics.uci.edu/ml/datasets/auto+mpg>
+
 ### Configuración entorno anaconda
 
 Para poder configurar el entorno tendremos que tener instalado previamente anaconda.Una vez que hayamos terminado la instalación, desde anaconda prompt, o desde nuestra línea de comandos, podemos introducir:
