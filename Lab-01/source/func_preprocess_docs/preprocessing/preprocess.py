@@ -16,6 +16,89 @@ class CognitiveServices():
         self._vision_base_url = self._settings.get_computer_vision_url()
         self._text_analytics_url = self._settings.get_text_analytics_url()
     
+    def checkDatetime(self, utc_timestamp, last_modified, doc):
+        blob_date = last_modified.strftime('%Y-%m-%d')
+        enrichdata = {}
+        if utc_timestamp == blob_date:
+            blob_url = self._storage.make_blob_url(self._settings.get_storage_documents(), doc.name)
+            vision = self.computer_vision_api(blob_url)
+            text, word_infos = self.ocr(blob_url, doc.name)
+            text_clean = ' '.join(text)
+            language = self.detectLanguage(text_clean)
+            sentiments, document = self.detectSentiment(language, text_clean)
+            keyphrases = self.getKeyphrases(document)
+
+            enrichdata['Vision'] = vision
+            enrichdata['OCR'] = word_infos
+            enrichdata['Keyphrases'] = keyphrases
+
+            logging.info(f'{json.dumps(enrichdata, indent=4, sort_keys=True)}')
+
+            enrichdata = json.dumps(enrichdata).encode('utf-8')
+            filename, _ = os.path.splitext(doc.name)
+            self._storage.upload_file_from_bytes(self._settings.get_storage_enrichment(), filename+'.json', enrichdata)
+
+    def computer_vision_api(self, blob_url):
+        vision_analyze_url = self._vision_base_url + 'analyze'
+        header = {'Ocp-Apim-Subscription-Key': self._subscription_key}
+        params = {'visualfeatures': 'Faces,Tags,Categories,Description,Color'}
+        data = {'url': blob_url}
+        response = requests.post(vision_analyze_url, headers=header, params=params, json=data)
+        response.raise_for_status()
+        analysis = response.json()
+        return analysis
+
+    def ocr(self, blob_url, filename):
+        ocr_url = self._vision_base_url + 'ocr'
+        headers = {'Ocp-Apim-Subscription-Key': self._subscription_key}
+        params = {'language': 'unk', 'detectOrientation ': 'true'}
+        data = {'url': blob_url}
+        response = requests.post(ocr_url, headers=headers, params=params, json=data)
+        response.raise_for_status()
+        analysis = response.json()
+        line_infos = [region['lines'] for region in analysis['regions']]
+        word_infos = self.extractWordsBoudings(line_infos)
+        self.showResultOnImage(word_infos, blob_url, filename)
+
+        text = self.extractTextFromOCR(line_infos)
+        return text, word_infos
+    
+    def detectLanguage(self, text):
+        language_api_url = self._text_analytics_url + 'languages'
+        text = self.truncateCharacters(text)
+        document = {'documents': [
+            {'id': '1', 'text': text}
+        ]}
+        headers = {'Ocp-Apim-Subscription-Key': self._subscription_key}
+        response  = requests.post(language_api_url, headers=headers, json=document)
+        languages = response.json()
+        language = languages['documents'][0]['detectedLanguages'][0]['iso6391Name']
+        return language
+
+    def detectSentiment(self, language, text):
+        sentiment_api_url = self._text_analytics_url + 'sentiment'
+        text = self.truncateCharacters(text)
+        document = {'documents': [
+            {'id': '1', 'language': language, 'text': text}
+        ]}
+        headers = {'Ocp-Apim-Subscription-Key': self._subscription_key}
+        response  = requests.post(sentiment_api_url, headers=headers, json=document)
+        sentiments = response.json()
+        logging.info(f'{sentiments}')
+        return sentiments, document
+    
+    def getKeyphrases(self, document):
+        key_phrase_api_url = self._text_analytics_url + 'keyPhrases'
+        headers = {'Ocp-Apim-Subscription-Key': self._subscription_key}
+        response  = requests.post(key_phrase_api_url, headers=headers, json=document)
+        keyphrases = response.json()
+        return keyphrases
+    
+    def truncateCharacters(self, text):
+        _, text = os.path.split(text)
+        text = (text[:5000] + '..') if len(text) > 5000 else text
+        return text
+
     def extractWordsBoudings(self, line_infos):
         word_infos = []
         for line in line_infos:
